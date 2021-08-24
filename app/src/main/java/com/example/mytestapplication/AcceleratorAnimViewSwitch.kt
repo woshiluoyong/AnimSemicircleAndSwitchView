@@ -6,6 +6,7 @@ import android.graphics.*
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Paint.FILTER_BITMAP_FLAG
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import java.util.*
 
@@ -335,6 +336,22 @@ class AcceleratorAnimViewSwitch : View {
             }
         }
         return true
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        //如果还在做动画，则不允许点击
+        if (thumbOffsetParent != 0f && thumbOffsetParent != 1f) return true
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> return true
+            MotionEvent.ACTION_UP -> {
+                if(AccState.AccBooting == accState || AccState.AccStoping == accState){
+                    return false
+                }else{
+                    callOnClick()
+                }
+            }
+        }
+        return super.onTouchEvent(event)
     }
 
     private fun dip2px(context: Context?, dpValue: Float): Int {
