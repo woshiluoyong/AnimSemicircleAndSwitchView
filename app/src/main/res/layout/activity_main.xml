@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     
-    <com.example.mytestapplication.AcceleratorAnimView
-        android:id="@+id/accelerateV"
+    <com.example.mytestapplication.AcceleratorAnimViewGroup
+        android:id="@+id/accelerateVg"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+        <com.example.mytestapplication.AcceleratorAnimViewSwitch
+            android:id="@+id/accelerateBtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true" />
+    </com.example.mytestapplication.AcceleratorAnimViewGroup>
 
     <Button
         android:id="@+id/btn01"
@@ -21,9 +27,10 @@
         android:text="Set To 60"
         android:background="#ddc0d4"
         android:layout_marginTop="15dp"
+        android:textAllCaps="false"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accelerateV" />
+        app:layout_constraintRight_toLeftOf="@id/btn02"
+        app:layout_constraintTop_toBottomOf="@id/accelerateVg" />
 
     <Button
         android:id="@+id/btn02"
@@ -32,9 +39,12 @@
         android:text="Set To 30"
         android:background="#ddc0d4"
         android:layout_marginTop="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn01" />
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/btn01"
+        app:layout_constraintRight_toLeftOf="@id/btn03"
+        app:layout_constraintTop_toBottomOf="@id/accelerateVg" />
 
     <Button
         android:id="@+id/btn03"
@@ -43,7 +53,64 @@
         android:text="Set To 100"
         android:background="#ddc0d4"
         android:layout_marginTop="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/btn02"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn02" />
+        app:layout_constraintTop_toBottomOf="@id/accelerateVg" />
+
+    <Button
+        android:id="@+id/btn04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Acc Booting"
+        android:background="#03A9F4"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="7.5dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn05"
+        app:layout_constraintTop_toBottomOf="@id/btn01" />
+
+    <Button
+        android:id="@+id/btn05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Acc Ok"
+        android:background="#03A9F4"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="7.5dp"
+        android:layout_marginEnd="15dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/btn01"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn01" />
+
+    <Button
+        android:id="@+id/btn06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Acc Stoping"
+        android:background="#03A9F4"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="7.5dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn07"
+        app:layout_constraintTop_toBottomOf="@id/btn04" />
+
+    <Button
+        android:id="@+id/btn07"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Acc Waiting"
+        android:background="#03A9F4"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="7.5dp"
+        android:layout_marginEnd="15dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/btn06"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn04" />
 </androidx.constraintlayout.widget.ConstraintLayout>

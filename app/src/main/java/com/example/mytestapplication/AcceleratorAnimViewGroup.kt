@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.math.hypot
 import kotlin.properties.Delegates
 
-class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): RelativeLayout(context, attr) {
+class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): RelativeLayout(context, attr) {
     private var screenWidth by Delegates.notNull<Int>()
     private var bgBitmap: Bitmap? = null
     private var maxLengthVal: Float? = 0f
@@ -27,7 +27,7 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
         this.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener{
             override fun onPreDraw(): Boolean {
                 maxLengthVal = hypot(width.toDouble(), height.toDouble()).toFloat()
-                this@AcceleratorAnimView.viewTreeObserver.removeOnPreDrawListener(this)
+                this@AcceleratorAnimViewGroup.viewTreeObserver.removeOnPreDrawListener(this)
                 return false
             }
         })
@@ -37,7 +37,6 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
         super.onDraw(canvas)
 
         val clipPath = Path()
-        //clipPath.addCircle(width.toFloat() - maxLenVal!!.toFloat(), maxLenVal!!.toFloat(), curProgressVal!!, Path.Direction.CCW)
         clipPath.addCircle(0f, height.toFloat(), curProgressVal!!, Path.Direction.CCW)
 
         canvas?.save()
@@ -77,7 +76,7 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
         canvas?.restore()
     }
 
-    fun setCurrentProgress(curVal: Int, stepVal: Float? = 20f){
+    fun setCurrentProgress(curVal: Int, stepVal: Float? = 1f){
         var curMaxLengthVal = if(curVal < 0){
             0f
         }else if(curVal > 100){
@@ -92,7 +91,7 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
             progressTimer?.schedule(object : TimerTask(){
                 override fun run() {
                     curProgressVal = curProgressVal!! + (if(isIncrease) stepVal!! else -stepVal!!)
-                    println("======Stephen=========progressTimer====>$curMaxLengthVal====>$curProgressVal")
+                    println("======progressTimer=============>$curMaxLengthVal====>$curProgressVal")
                     if(if(isIncrease) curProgressVal!! <= curMaxLengthVal!! else curProgressVal!! >= curMaxLengthVal!!){
                         postInvalidate()
                     }else{
@@ -101,7 +100,7 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
                         checkStopProgressTimer()
                     }
                 }
-            }, 100, 100)
+            }, 1, 1)
         }//end of if
     }
 
@@ -110,7 +109,8 @@ class AcceleratorAnimView(context: Context, attr: AttributeSet? = null): Relativ
         progressTimer = null
     }
 
-    private fun getBitmapFromResId(context: Context, resId: Int): Bitmap? {
+    private fun getBitmapFromResId(context: Context?, resId: Int): Bitmap? {
+        if(null == context)return null
         val opt = BitmapFactory.Options()
         opt.inPreferredConfig = Bitmap.Config.ARGB_4444
         opt.inPurgeable = true

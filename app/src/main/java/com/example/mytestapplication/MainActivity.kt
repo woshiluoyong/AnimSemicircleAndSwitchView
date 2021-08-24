@@ -9,15 +9,33 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val accelerateV = findViewById<AcceleratorAnimView>(R.id.accelerateV)
+        val accelerateVg = findViewById<AcceleratorAnimViewGroup>(R.id.accelerateVg)
         findViewById<View>(R.id.btn01).setOnClickListener {
-            accelerateV.setCurrentProgress(60)
+            accelerateVg.setCurrentProgress(60)
         }
         findViewById<View>(R.id.btn02).setOnClickListener {
-            accelerateV.setCurrentProgress(30)
+            accelerateVg.setCurrentProgress(30)
         }
         findViewById<View>(R.id.btn03).setOnClickListener {
-            accelerateV.setCurrentProgress(100)
+            accelerateVg.setCurrentProgress(100)
+        }
+
+        val accelerateBtn = findViewById<AcceleratorAnimViewSwitch>(R.id.accelerateBtn)
+        accelerateBtn.setOnClickListener {
+            accelerateBtn.changeAccState(AcceleratorAnimViewSwitch.AccState.AccBooting)
+        }
+
+        findViewById<View>(R.id.btn04).setOnClickListener {
+            accelerateBtn.changeAccState(AcceleratorAnimViewSwitch.AccState.AccBooting)
+        }
+        findViewById<View>(R.id.btn05).setOnClickListener {
+            accelerateBtn.changeAccState(AcceleratorAnimViewSwitch.AccState.Accelerating)
+        }
+        findViewById<View>(R.id.btn06).setOnClickListener {
+            accelerateBtn.changeAccState(AcceleratorAnimViewSwitch.AccState.AccStoping)
+        }
+        findViewById<View>(R.id.btn07).setOnClickListener {
+            accelerateBtn.changeAccState(AcceleratorAnimViewSwitch.AccState.AccWaiting)
         }
     }
 }
