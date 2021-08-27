@@ -28,7 +28,7 @@ class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): Re
 
         this.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener{
             override fun onPreDraw(): Boolean {
-                maxLengthVal = hypot(width.toDouble(), height.toDouble()).toFloat()
+                maxLengthVal = 2 * (hypot(width.toDouble(), height.toDouble() / 2f).toFloat())
                 if(null != tag){
                     try{initBaseValProgress(tag.toString().toInt())}catch (e: Exception){}
                 }//end of if
@@ -56,7 +56,7 @@ class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): Re
         super.onDraw(canvas)
 
         val clipPath = Path()
-        clipPath.addCircle(0f, height.toFloat(), curProgressVal!!, Path.Direction.CCW)
+        clipPath.addCircle(-width.toFloat() / 1f, height.toFloat(), curProgressVal!!, Path.Direction.CCW)
 
         canvas?.save()
         canvas?.clipPath(clipPath)
