@@ -56,7 +56,7 @@ class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): Re
         super.onDraw(canvas)
 
         val clipPath = Path()
-        clipPath.addCircle(-width.toFloat() / 1f, height.toFloat(), curProgressVal!!, Path.Direction.CCW)
+        clipPath.addCircle(-width.toFloat(), height.toFloat(), curProgressVal!!, Path.Direction.CCW)
 
         canvas?.save()
         canvas?.clipPath(clipPath)
