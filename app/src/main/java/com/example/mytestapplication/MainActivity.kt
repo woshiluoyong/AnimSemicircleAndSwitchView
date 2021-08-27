@@ -11,10 +11,10 @@ class MainActivity : AppCompatActivity() {
 
         val accelerateVg = findViewById<AcceleratorAnimViewGroup>(R.id.accelerateVg)
         findViewById<View>(R.id.btn01).setOnClickListener {
-            accelerateVg.setCurrentProgress(60)
+            accelerateVg.setCurrentProgress(0)
         }
         findViewById<View>(R.id.btn02).setOnClickListener {
-            accelerateVg.setCurrentProgress(30)
+            accelerateVg.setCurrentProgress(60)
         }
         findViewById<View>(R.id.btn03).setOnClickListener {
             accelerateVg.setCurrentProgress(100)

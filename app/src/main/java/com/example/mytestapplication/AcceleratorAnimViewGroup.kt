@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.ViewTreeObserver
 import android.widget.RelativeLayout
 import android.view.WindowManager
+import java.lang.Exception
 import java.util.*
 import kotlin.math.hypot
 import kotlin.properties.Delegates
@@ -13,8 +14,9 @@ import kotlin.properties.Delegates
 class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): RelativeLayout(context, attr) {
     private var screenWidth by Delegates.notNull<Int>()
     private var bgBitmap: Bitmap? = null
+    private var curProgressBase: Int? = 0 //基础进度比例
     private var maxLengthVal: Float? = 0f
-    private var curProgressVal: Float? = 0f
+    private var curProgressVal: Float? = 0f //当前进度长度
     private var progressTimer: Timer? = null
 
     init {
@@ -27,10 +29,27 @@ class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): Re
         this.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener{
             override fun onPreDraw(): Boolean {
                 maxLengthVal = hypot(width.toDouble(), height.toDouble()).toFloat()
+                if(null != tag){
+                    try{initBaseValProgress(tag.toString().toInt())}catch (e: Exception){}
+                }//end of if
                 this@AcceleratorAnimViewGroup.viewTreeObserver.removeOnPreDrawListener(this)
                 return false
             }
         })
+    }
+
+    //设置基础值
+    private fun initBaseValProgress(baseVal: Int){
+        if(curProgressBase == baseVal)return
+        curProgressBase = if(baseVal < 0){
+            0
+        } else if(baseVal > 100){
+            100
+        } else{
+            baseVal
+        }
+        curProgressVal = maxLengthVal!! * (curProgressBase!!.toFloat() / 100f)
+        postInvalidate()
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -77,12 +96,13 @@ class AcceleratorAnimViewGroup(context: Context, attr: AttributeSet? = null): Re
     }
 
     fun setCurrentProgress(curVal: Int, stepVal: Float? = 1f){
-        var curMaxLengthVal = if(curVal < 0){
+        val tmpCurVal = curProgressBase!! + ((100 - curProgressBase!!) * (curVal.toFloat() / 100f))
+        var curMaxLengthVal = if(tmpCurVal < 0){
             0f
-        }else if(curVal > 100){
+        }else if(tmpCurVal > 100){
             maxLengthVal
         }else{
-            maxLengthVal!! * (curVal.toFloat() / 100f)
+            maxLengthVal!! * (tmpCurVal.toFloat() / 100f)
         }
         checkStopProgressTimer()
         if(curMaxLengthVal != curProgressVal){
